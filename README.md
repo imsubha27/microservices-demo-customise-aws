@@ -1,15 +1,11 @@
-<!-- <p align="center">
-<img src="/src/frontend/static/icons/Hipster_HeroLogoMaroon.svg" width="300" alt="Online Boutique" />
-</p> -->
-
 ## Microservices-Demo-Scratch
 
 This is a **customized fork** of Google’s [microservices-demo (Online Boutique)](https://github.com/GoogleCloudPlatform/microservices-demo), restructured for **AWS DevOps practice** using:
 
-- 🐳 Docker & Amazon ECR for containerization
-- ☸️ Amazon EKS for orchestration
-- ⚙️ GitHub Actions / ArgoCD for CI/CD
-- 📈 CloudWatch / Prometheus for monitoring
+-  Docker & Amazon ECR for containerization
+-  Amazon EKS for orchestration
+-  GitHub Actions / ArgoCD for CI/CD
+-  CloudWatch / Prometheus for monitoring
 
 > 🎯 Goal: Build a full DevOps pipeline from scratch on AWS
 
