@@ -1,38 +1,52 @@
-# productcatalogservice
+# Product Catalog Service
 
-Run the following command to restore dependencies to `vendor/` directory:
+The Product Catalog Service product information to other microservices via gRPC.
+It reads product data from products.json and runs on port 3550 by default.
 
-    go mod vendor
+## Building Locally
 
-## Dynamic catalog reloading / artificial delay
+The Product Catalog Service requires Go 1.23. To run it locally:
+To install dependencies, run:
 
-This service has a "dynamic catalog reloading" feature that is purposefully
-not well implemented. The goal of this feature is to allow you to modify the
-`products.json` file and have the changes be picked up without having to
-restart the service.
-
-However, this feature is bugged: the catalog is actually reloaded on each
-request, introducing a noticeable delay in the frontend. This delay will also
-show up in profiling tools: the `parseCatalog` function will take more than 80%
-of the CPU time.
-
-You can trigger this feature (and the delay) by sending a `USR1` signal and
-remove it (if needed) by sending a `USR2` signal:
-
-```
-# Trigger bug
-kubectl exec \
-    $(kubectl get pods -l app=productcatalogservice -o jsonpath='{.items[0].metadata.name}') \
-    -c server -- kill -USR1 1
-# Remove bug
-kubectl exec \
-    $(kubectl get pods -l app=productcatalogservice -o jsonpath='{.items[0].metadata.name}') \
-    -c server -- kill -USR2 1
+```sh
+go mod download
 ```
 
-## Latency injection
+To run the Product Catalog Service:
 
-This service has an `EXTRA_LATENCY` environment variable. This will inject a sleep for the specified [time.Duration](https://golang.org/pkg/time/#ParseDuration) on every call to
-to the server.
+```sh
+go run .
+```
 
-For example, use `EXTRA_LATENCY="5.5s"` to sleep for 5.5 seconds on every request.
+Expected Output
+
+```sh
+{"message":"starting grpc server at :3550","severity":"info"}
+{"message":"successfully parsed product catalog json","severity":"info"}
+```
+
+We'll get expected output only in linux or macos. If you’re running on Windows, ignore SIGUSR1/SIGUSR2 signal references.
+
+## Test using grpcurl
+
+List services:
+
+```sh
+grpcurl -plaintext localhost:3550 list
+```
+
+List products:
+
+```sh
+grpcurl -plaintext localhost:3550 hipstershop.ProductCatalogService/ListProducts
+```
+
+You’ll get a JSON list of products from products.json.
+
+## Building Docker
+
+From this Product Catalog folder, run:
+
+```sh
+docker build -t productcatalogservice:latest .
+```
