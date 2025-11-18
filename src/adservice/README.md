@@ -4,12 +4,21 @@ The Ad service provides advertisement based on context keys. If no context keys 
 
 ## Building locally
 
-The Ad service uses gradlew to compile/install/distribute. Gradle wrapper is already part of the source code. To build Ad Service, run:
+The Ad Service requires Java 19 (OpenJDK / Amazon Corretto) to build and it uses Gradle wrapper to compile, install, and run. Gradle wrapper is already included in the repo, so you don’t need to install Gradle separately.
 
 ```
 ./gradlew installDist
 ```
-It will create executable script src/adservice/build/install/hipstershop/bin/AdService
+It will create executable script src/adservice/build/install/hipstershop/bin
+To run the service, navigate to the bin folder:-
+```
+./AdService.bat
+```
+
+to run the client-
+```
+./AdServiceClient.bat
+```
 
 ### Upgrading gradle version
 If you need to upgrade the version of gradle then run
@@ -18,11 +27,20 @@ If you need to upgrade the version of gradle then run
 ./gradlew wrapper --gradle-version <new-version>
 ```
 
-## Building docker image
+## Running with Docker
 
-From `src/adservice/`, run:
+If you prefer running the Ad Service in a container, you can do the following:
 
 ```
-docker build ./
+docker build -t adservice:latest .
+```
+Run the container:
+
+```
+docker run -p 9555:9555 adservice:latest
 ```
 
+## Notes
+- Google Java Format checks are skipped during installDist, so you won’t see formatting errors blocking your build.
+
+- Using installDist or the custom Gradle tasks is the recommended way to run this service locally.
