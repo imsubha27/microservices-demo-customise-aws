@@ -38,4 +38,4 @@ ENV PORT=50051
 EXPOSE 50051
 
 # Start server
-ENTRYPOINT [ "node", "server.js" ]
+ENTRYPOINT [ "node", "index.js" ]
