@@ -25,6 +25,9 @@ COPY --from=build /install /usr/local
 # Copy application code
 COPY locustfile.py .
 
+COPY start.sh .
+RUN chmod +x start.sh
+
 # Enable unbuffered logging
 ENV PYTHONUNBUFFERED=1
 
@@ -40,5 +43,4 @@ EXPOSE 8090
 # CMD ["locust", "-f", "locustfile.py", "--host=http://frontend:8080"]
 
 # Run Locust headlessly using FRONTEND_ADDR as target host and USERS for load level
-ENTRYPOINT locust --host="http://${FRONTEND_ADDR}" --headless -u "${USERS:-10}" 2>&1
-
+ENTRYPOINT ["./start.sh"]
