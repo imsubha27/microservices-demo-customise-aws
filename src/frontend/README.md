@@ -23,7 +23,6 @@ If you see errors about missing environment variables, set these before running.
 $env:PRODUCT_CATALOG_SERVICE_ADDR="localhost:3550"
 $env:CART_SERVICE_ADDR="localhost:7070"
 $env:CURRENCY_SERVICE_ADDR="localhost:7000"
-$env:PAYMENT_SERVICE_ADDR="localhost:50051"
 $env:SHIPPING_SERVICE_ADDR="localhost:50052"
 $env:RECOMMENDATION_SERVICE_ADDR="localhost:8080"
 $env:CHECKOUT_SERVICE_ADDR="localhost:5050"
@@ -63,7 +62,7 @@ docker build -t frontend:latest .
 
 Then start the container:
 ```sh
-docker run -p 5050:5050 frontend:latest
+docker run -p 8050:8050 frontend:latest
 ```
 
 
